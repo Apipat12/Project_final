@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'output_page.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -17,22 +16,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: Home2(), // Your Home widget as the starting screen
     );
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class Home2 extends StatefulWidget {
+  const Home2({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home2> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home2> {
   final ImagePicker _picker = ImagePicker();
   File? _imageFile;
   String _responseMessage = ''; // ประกาศตัวแปร _responseMessage
@@ -88,8 +86,8 @@ class _HomeState extends State<Home> {
         );
       },
     );
-   // URL ที่ใช้ในการอัปโหลดภาพไปยัง API
-    var apiUrl = Uri.parse('http://172.16.20.253:8000/predictENG/');
+    // URL ที่ใช้ในการอัปโหลดภาพไปยัง API
+    var apiUrl = Uri.parse('http://172.16.20.253:8000/predictTH/');
     // ส่งไฟล์ภาพแบบ multipart ไปยัง API
     var request = http.MultipartRequest('POST', apiUrl);
 
@@ -118,7 +116,7 @@ class _HomeState extends State<Home> {
         String use0 = jsonResponse['use0'] ?? '';
         String side_effect0 = jsonResponse['side_effect0'] ?? '';
         String error = jsonResponse['error'] ?? '';
-    // ปิดหมุนหลังจากการตอบกลับเสร็จสิ้น
+        // ปิดหมุนหลังจากการตอบกลับเสร็จสิ้น
         Navigator.of(context).pop();
 
         // ทางไปหน้า OutputPage
@@ -127,14 +125,14 @@ class _HomeState extends State<Home> {
           MaterialPageRoute(
             //เมื่อได้รับข้อมูลจาก API จะนำทางไปยังหน้า OutputPage พร้อมกับส่งข้อมูลที่ได้รับไปแสดงในหน้านั้น
             builder: (context) => OutputPage(
-              name: name,
-              description: description,
-              type: type,
-              use: use,
-              therapeutic_class: therapeutic_class,
-              use0: use0,
-              side_effect0: side_effect0,
-              error:error
+                name: name,
+                description: description,
+                type: type,
+                use: use,
+                therapeutic_class: therapeutic_class,
+                use0: use0,
+                side_effect0: side_effect0,
+                error:error
             ),
           ),
         );
@@ -171,7 +169,7 @@ class _HomeState extends State<Home> {
             fontSize: 26, // ปรับขนาดตัวอักษร
             color: Colors.white, // สีของตัวอักษร
             letterSpacing:
-                1.2, // ระยะห่างระหว่างตัวอักษรเล็กน้อยเพื่อความสวยงาม
+            1.2, // ระยะห่างระหว่างตัวอักษรเล็กน้อยเพื่อความสวยงาม
           ),
         ),
       ),
@@ -224,7 +222,7 @@ class _HomeState extends State<Home> {
                               const SizedBox(width: 20, height: 30),
                               // Space between icon and text
                               const Text(
-                                "Camera",
+                                "เปิดกล้อง",
                                 style: TextStyle(
                                   color: Colors.black87,
                                   fontWeight: FontWeight.bold,
@@ -268,7 +266,7 @@ class _HomeState extends State<Home> {
                               const SizedBox(width: 20, height: 30),
                               // Space between icon and text
                               const Text(
-                                "Gallery",
+                                "เปิดรูปภาพ",
                                 style: TextStyle(
                                   color: Colors.black87,
                                   fontWeight: FontWeight.bold,
@@ -284,7 +282,7 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-             // const SizedBox(height: 50),//80
+              // const SizedBox(height: 50),//80
               Container(height: 240)
             ],
           ),
